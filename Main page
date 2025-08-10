@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Renew România</title>
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #f9fafb;
+    color: #1a1a2e;
+    line-height: 1.6;
+  }
+  header {
+    background-color: #0f3057;
+    color: #ffffff;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 8px rgba(15,48,87,0.3);
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: 0.12rem;
+    font-family: 'Segoe UI Black', sans-serif;
+  }
+  nav {
+    margin-top: 0.75rem;
+  }
+  nav a {
+    color: #bbe1fa;
+    text-decoration: none;
+    margin-right: 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.25s ease;
+  }
+  nav a:hover {
+    color: #3f72af;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+  }
+
+  /* New post form */
+  #new-post {
+    background: #e1eaf6;
+    border-radius: 8px;
+    padding: 25px 30px;
+    box-shadow: 0 2px 12px rgba(15,48,87,0.15);
+    margin-bottom: 3rem;
+  }
+  #new-post h2 {
+    margin-top: 0; margin-bottom: 1.2rem;
+    font-weight: 700;
+    color: #0f3057;
+    font-size: 1.6rem;
+    letter-spacing: 0.03rem;
+  }
+  #new-post input[type="text"],
+  #new-post textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #0f3057;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+    transition: border-color 0.3s ease;
+  }
+  #new-post input[type="text"]:focus,
+  #new-post textarea:focus {
+    border-color: #3f72af;
+    outline: none;
+    background-color: #f0f5fb;
+  }
+  #new-post button {
+    background-color: #0f3057;
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(15,48,87,0.25);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #new-post button:hover {
+    background-color: #3f72af;
+    box-shadow: 0 6px 16px rgba(63,114,175,0.4);
+  }
+
+  /* Posts */
+  article.post {
+    background: white;
+    border-radius: 8px;
+    padding: 25px 30px;
+    box-shadow: 0 2px 10px rgba(15,48,87,0.1);
+    margin-bottom: 2.8rem;
+    transition: box-shadow 0.3s ease;
+  }
+  article.post:hover {
+    box-shadow: 0 6px 16px rgba(15,48,87,0.2);
+  }
+  article.post h2 {
+    margin: 0 0 0.4rem 0;
+    font-weight: 800;
+    font-size: 1.9rem;
+    color: #0f3057;
+  }
+  article.post time {
+    color: #61708a;
+    font-size: 0.95rem;
+    font-style: italic;
+    letter-spacing: 0.03rem;
+  }
+  article.post p {
+    margin-top: 1rem;
+    font-size: 1.15rem;
+    color: #2e4057;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  /* Comment section */
+  .comment-section {
+    margin-top: 2rem;
+    background: #f4f7fa;
+    border-radius: 8px;
+    border: 1px solid #d1dbe8;
+    padding: 20px 25px;
+  }
+  .comment-section h3 {
+    margin-top: 0; margin-bottom: 1rem;
+    font-weight: 700;
+    color: #0f3057;
+    letter-spacing: 0.05rem;
+  }
+  .comments-list {
+    max-height: 170px;
+    overflow-y: auto;
+    margin-bottom: 1.25rem;
+  }
+  .comment {
+    background: #e1eaf6;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: #0f3057;
+    box-shadow: 0 1px 3px rgba(15,48,87,0.15);
+  }
+  .comment strong {
+    color: #1a1a2e;
+  }
+  .comment-section input[type="text"],
+  .comment-section textarea {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 1rem;
+    border: 1.5px solid #0f3057;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: border-color 0.3s ease;
+  }
+  .comment-section input[type="text"]:focus,
+  .comment-section textarea:focus {
+    border-color: #3f72af;
+    outline: none;
+    background-color: #f0f5fb;
+  }
+  .comment-section textarea {
+    resize: vertical;
+  }
+  .comment-section button {
+    background-color: #0f3057;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(15,48,87,0.25);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .comment-section button:hover {
+    background-color: #3f72af;
+    box-shadow: 0 6px 16px rgba(63,114,175,0.4);
+  }
+
+  /* Loading message */
+  #loading-message {
+    text-align: center;
+    font-style: italic;
+    color: #0f3057;
+    margin: 1.5rem 0 3rem 0;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin: 4rem 0 2rem 0;
+    color: #61708a;
+    font-size: 0.95rem;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    header, main {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    nav a {
+      display: inline-block;
+      margin: 0 0 0.75rem 0;
+    }
+  }
+</style>
+
+<!-- Google Fonts Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+  <h1>Renew România</h1>
+  <nav>
+    <a href="#">Acasă</a>
+    <a href="#">Despre</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section id="new-post">
+    <h2>Adaugă un articol nou</h2>
+    <input type="text" id="post-title" placeholder="Titlul articolului" required>
+    <textarea id="post-content" placeholder="Conținutul articolului" rows="5" required></textarea>
+    <button onclick="addPost()">Publică articol</button>
+  </section>
+
+  <div id="loading-message">Se încarcă...</div>
+  <div id="posts"></div>
+</main>
+
+<footer>
+  &copy; 2025 Renew România
+</footer>
+
+<script>
+  function escapeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function loadPosts() {
+    const loading = document.getElementById('loading-message');
+    const postsContainer = document.getElementById('posts');
+    try {
+      loading.style.display = 'block';
+      postsContainer.innerHTML = '';
+      const posts = JSON.parse(localStorage.getItem('site-posts')) || [];
+
+      posts.forEach((post, index) => {
+        const article = document.createElement('article');
+        article.className = 'post';
+        article.innerHTML = `
+          <h2>${escapeHTML(post.title)}</h2>
+          <time>${post.date}</time>
+          <p>${escapeHTML(post.content)}</p>
+          <section class="comment-section">
+            <h3>Comentarii</h3>
+            <div class="comments-list" id="comments-${index}"></div>
+            <input type="text" id="name-${index}" placeholder="Numele tău">
+            <textarea id="comment-${index}" placeholder="Scrie un comentariu..." rows="2"></textarea>
+            <button onclick="addComment(${index})">Trimite</button>
+          </section>
+        `;
+        postsContainer.appendChild(article);
+        loadComments(index);
+      });
+
+      loading.style.display = 'none';
+    } catch (error) {
+      loading.textContent = 'Eroare la încărcare. Încearcă să reîmprospătezi pagina.';
+      console.error('Loading error:', error);
+    }
+  }
+
+  function addPost() {
+    const titleInput = document.getElementById('post-title');
+    const contentInput = document.getElementById('post-content');
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+    if (!title || !content) {
+      alert('Te rog completează titlul și conținutul articolului.');
+      return;
+    }
+
+    const posts = JSON.parse(localStorage.getItem('site-posts')) || [];
+    posts.unshift({
+      title,
+      content,
+      date: new Date().toLocaleDateString('ro-RO')
+    });
+    localStorage.setItem('site-posts', JSON.stringify(posts));
+
+    titleInput.value = '';
+    contentInput.value = '';
+    loadPosts();
+  }
+
+  function addComment(postIndex) {
+    const nameInput = document.getElementById(`name-${postIndex}`);
+    const commentInput = document.getElementById(`comment-${postIndex}`);
+    const name = nameInput.value.trim();
+    const text = commentInput.value.trim();
+    if (!name || !text) {
+      alert('Te rog completează numele și comentariul.');
+      return;
+    }
+
+    const commentsKey = `comments-${postIndex}`;
+    const comments = JSON.parse(localStorage.getItem(commentsKey)) || [];
+    comments.push({ name, text });
+    localStorage.setItem(commentsKey, JSON.stringify(comments));
+
+    nameInput.value = '';
+    commentInput.value = '';
+    loadComments(postIndex);
+  }
+
+  function loadComments(postIndex) {
+    const commentsContainer = document.getElementById(`comments-${postIndex}`);
+    const commentsKey = `comments-${postIndex}`;
+    const comments = JSON.parse(localStorage.getItem(commentsKey)) || [];
+    commentsContainer.innerHTML = '';
+    comments.forEach(comment => {
+      const commentDiv = document.createElement('div');
+      commentDiv.className = 'comment';
+      commentDiv.innerHTML = `<strong>${escapeHTML(comment.name)}:</strong> ${escapeHTML(comment.text)}`;
+      commentsContainer.appendChild(commentDiv);
+    });
+  }
+
+  // Load posts on page load
+  window.onload = loadPosts;
+</script>
+
+</body>
+</html>
